@@ -39,24 +39,28 @@ public class Water
         return WaterState.IceAndFluid;
     }
 
-    public void AddEnergy(double energyAmount)
+    public void AddEnergy(double energy)
     {
+
         if (Temperature > 0)
         {
-            Temperature += energyAmount / Amount;
+            //double energyAmount = energy + Temperature * Amount - Amount * 80;
+            Temperature += energy / Amount;
         }
+
         else
         {
+            double energyAmount = energy - (100 - Temperature) * Amount - Amount * 600;
             /* heatTo0 - mengden energi som brukes til å få  */
             var energyToHeatIce = Temperature * Amount;
             var energyToMeltIce = Amount * 80;
             energyAmount -= energyToHeatIce;
-            
+
             if (energyAmount >= energyToHeatIce + energyToMeltIce)
             {
                 energyAmount -= energyToHeatIce - energyToMeltIce;
-                var proportionHeatedWater = energyAmount / ((100 - 0) * Amount * 1);
-                Temperature = 0 + proportionHeatedWater * 100;
+                //var proportionHeatedWater = energyAmount / ((100 - 0) * Amount * 1);
+                //Temperature = 0 + proportionHeatedWater * 100;
                 //Temperature = 0;
                 isMeltedOrGas = true;
             }
